@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="functions.js"></script>
+    <script>
+        console.log("salt> IN THE HEAD")
+    </script>
+</head>
+
+<body>
+    <script>
+        console.log("Salt> Start of the body")
+        const addElements = (numberOfListItems) => {
+            const mainElement = document.querySelector("main");
+            const ulElement = document.createElement("ul");
+            mainElement.appendChild(ulElement);
+            
+            for (let i = 0; i < numberOfListItems; i++) {
+                const liElement = document.createElement("li");
+                ulElement.appendChild(liElement);
+                liElement.innerHTML = "elemento" + i;
+            }
+        };
+    </script>
+    <main>
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur hic deserunt nostrum.</div>
+        <div>Perspiciatis iste excepturi delectus adipisci cum tenetur obcaecati? Amet at repellendus maiores.</div>
+        <div>Commodi error possimus nam consequatur veniam sunt quo id blanditiis qui consequuntur.</div>
+    </main>
+
+    <script>
+        const companyName = myFunctions.getCompanyName();
+        document.getElementsByTagName("div")[1].innerHTML = companyName;
+        // console.log("salt> End of the body" + ` Company name is ${name}`);
+        addElements(50);
+
+        function removesDivById (id) {
+            const divToRemove = document.querySelector("div#" + id);
+            if(divToRemove != undefined) {
+                divToRemove.remove();
+            }
+            // const allDivs = document.querySelectorAll("div");
+            // for (div of allDivs) {
+            //     if (div.className === "companyName") {
+            //         div.remove();
+            //     }
+            // }
+        }
+
+        removesDivById("companyName");
+    </script>
+
+</body>
+
+</html>
