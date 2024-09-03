@@ -9,26 +9,32 @@
     <script>
         function getUsers(element) {
             return fetch("https://randomuser.me/api/?gender=female&results=30")
-                .then((response) => response.json())
+                    .then((response) => response.json())
                 .then((data) => {
-                    // element.textContent = data.results.length;
-                    const users = data.results;
-                    console.log(users);
-                    users.map((user) => {
-                        const divElement = document.createElement("div");
-                        const h2NameElement = document.createElement("h2");
-                        const imgElement = document.createElement("img");
-                        element.appendChild(divElement);
-                        divElement.appendChild(imgElement);
-                        divElement.appendChild(h2NameElement);
-                        const firstName = users[users.indexOf(user)].name.first;
-                        const LastName = users[users.indexOf(user)].name.last;
-
-                        h2NameElement.textContent = firstName + " " + LastName;
-                        const thumbnail = users[users.indexOf(user)].picture.thumbnail;
-                        imgElement.src = thumbnail;
-                    })
+                    const userList = createUsersList(data.results)
+                    element.appendChild(userList);
                 });
+
+        }
+
+
+        const createUsersList = (users) => {
+            const userList = document.createElement("div");
+            users.map((user) => {
+                const h2NameElement = document.createElement("h2");
+                h2NameElement.textContent = `${user.name.title} ${user.name.first}`;
+                
+                const imgElement = document.createElement("img");
+                imgElement.src = `${user.picture.thumbnail}`;
+
+                const divElement = document.createElement("div");
+                divElement.appendChild(imgElement);
+                divElement.appendChild(h2NameElement);
+                
+                userList.appendChild(divElement);
+            })
+
+            return userList;
         }
 
         document.addEventListener("DOMContentLoaded", () => {
