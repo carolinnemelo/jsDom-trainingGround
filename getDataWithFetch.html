@@ -22,12 +22,12 @@
             const userList = document.createElement("div");
             
             users.map((user) => {
-                const h2NameElement = createUserHeading(user);
-                const userThumbnail = createUserThumbnail(user);
-                const divElement = document.createElement("div");
-                divElement.appendChild(userThumbnail);
-                divElement.appendChild(h2NameElement);
-                userList.appendChild(divElement);
+                const userDiv = document.createElement("div");
+                
+                userDiv.appendChild(createUserThumbnail(user));
+                userDiv.appendChild(createUserHeading(user));
+                
+                userList.appendChild(userDiv);
             })
             
             return userList;
