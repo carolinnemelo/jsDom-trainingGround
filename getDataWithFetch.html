@@ -20,23 +20,31 @@
 
         const createUsersList = (users) => {
             const userList = document.createElement("div");
+            
             users.map((user) => {
-                const h2NameElement = document.createElement("h2");
-                h2NameElement.textContent = `${user.name.title} ${user.name.first}`;
-                
-                const imgElement = document.createElement("img");
-                imgElement.src = `${user.picture.thumbnail}`;
-
+                const h2NameElement = createUserHeading(user);
+                const userThumbnail = createUserThumbnail(user);
                 const divElement = document.createElement("div");
-                divElement.appendChild(imgElement);
+                divElement.appendChild(userThumbnail);
                 divElement.appendChild(h2NameElement);
-                
                 userList.appendChild(divElement);
             })
-
+            
             return userList;
         }
-
+        
+        const createUserHeading = (user) => {
+            const h2NameElement = document.createElement("h2");
+            h2NameElement.textContent = `${user.name.title} ${user.name.first}`;
+            return h2NameElement;
+        }
+        
+        const createUserThumbnail = (user) => {
+            const userThumbnail = document.createElement("img");
+            userThumbnail.src = `${user.picture.thumbnail}`;
+            return userThumbnail;
+        }
+        
         document.addEventListener("DOMContentLoaded", () => {
             const mainElement = document.querySelector("main");
             getUsers(mainElement);
