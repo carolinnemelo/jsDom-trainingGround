@@ -7,30 +7,38 @@
     <title>Document</title>
 
     <script>
-        function getUsers(element) {
-            return fetch("https://randomuser.me/api/?gender=female&results=30")
-                    .then((response) => response.json())
-                .then((data) => {
-                    const userList = createUsersList(data.results)
-                    element.appendChild(userList);
-                });
-
+        async function getUsers() {
+            const response = await fetch("https://randomuser.me/api/?gender=female&results=30")
+            const data = await response.json();
+            const usersArr = data.results;
+            return usersArr;
+            // console.log(usersArr)
         }
 
+        document.addEventListener("DOMContentLoaded", async () => {
+            const mainElement = document.querySelector("main");
+            const usersArr = await getUsers();
+            console.log(usersArr)
+
+            const userList = createUsersList(usersArr);
+            mainElement.appendChild(userList);
+            
+            
+        })
 
         const createUsersList = (users) => {
-            const userList = document.createElement("div");
+            const userListElement = document.createElement("div");
             
             users.map((user) => {
                 const userDiv = document.createElement("div");
                 
                 userDiv.appendChild(createUserThumbnail(user));
                 userDiv.appendChild(createUserHeading(user));
-                
-                userList.appendChild(userDiv);
+
+                userListElement.appendChild(userDiv);
             })
-            
-            return userList;
+           
+            return userListElement;
         }
         
         const createUserHeading = (user) => {
@@ -45,16 +53,28 @@
             return userThumbnail;
         }
         
-        document.addEventListener("DOMContentLoaded", () => {
+
+    const filterUsers = async (users) => {
             const mainElement = document.querySelector("main");
-            getUsers(mainElement);
-        })
+            const usersArr = await getUsers();
+            const filterInputValue = document.querySelector("#filterInput").value;
+
+            const filteredArr = usersArr.filter(user => { 
+                user.includes(filterInputValue) 
+            })
+
+            console.log(filteredArr)
+            
+
+        }
 
     </script>
 </head>
 
 <body>
     <main>
+        <input type="text" id="filterInput" placeholder="Filter by name">
+        <button onclick="filterUsers()">Filter</button>
         <script>
 
         </script>
