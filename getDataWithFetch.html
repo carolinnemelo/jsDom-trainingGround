@@ -79,9 +79,19 @@
                 const userList = createUsersList(filteredArr);
                 mainElement.appendChild(userList);
             } else {
-                const noUserMessage = document.createElement("h3");
-                noUserMessage.textContent = "No user found. Please, try again."
-                mainElement.appendChild(noUserMessage);
+                let noUserMessage = document.querySelector("#noUserMessage-id");
+
+                if (!noUserMessage) {
+                    noUserMessage = document.createElement("h3");
+                    noUserMessage.id = "noUserMessage-id";
+                    noUserMessage.textContent = "No user found. Please, try again.";
+                    mainElement.appendChild(noUserMessage);
+
+                } else {
+                    noUserMessage.innerHTML = "";
+                    noUserMessage.textContent = "No user found. Please, try again.";
+                    mainElement.appendChild(noUserMessage);
+                }
 
             }
 
