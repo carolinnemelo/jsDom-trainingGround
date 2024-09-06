@@ -35,10 +35,15 @@
             if (!userListElement) {
                 
                 const userListElement = document.createElement("div");
-                userListElement.classList.add("userListElement")
+                userListElement.classList.add("userListElement");
+
                 
                 users.map((user) => {
                     const userDiv = document.createElement("div");
+                    userDiv.style.display = "flex";
+                    userDiv.style.margin = "1rem";
+                    userDiv.style.gap = "2rem";
+
                     
                     userDiv.appendChild(createUserThumbnail(user));
                     userDiv.appendChild(createUserHeading(user));
@@ -59,8 +64,10 @@
                     userDiv.appendChild(createUserHeading(user));
     
                     userListElement.appendChild(userDiv);
-                })
 
+                    //style div
+                })
+                
             return userListElement;
 
             }
@@ -70,7 +77,7 @@
         
         const createUserHeading = (user) => {
             const h2NameElement = document.createElement("h2");
-            h2NameElement.textContent = `${user.name.title} ${user.name.first}`;
+            h2NameElement.textContent = `${user.name.first} ${user.name.last}`;
             return h2NameElement;
         }
         
