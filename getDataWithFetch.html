@@ -11,17 +11,21 @@
             const response = await fetch("https://randomuser.me/api/?gender=female&results=30")
             const data = await response.json();
             const usersArr = data.results;
-            return usersArr;
-            // console.log(usersArr)
+            sessionStorage.setItem("userArr", JSON.stringify(usersArr))
+
+            const storedUsers = JSON.parse(sessionStorage.getItem("userArr"))
+            // console.log("sessionStorage:", storedUsers)
+
+
         }
 
-        document.addEventListener("DOMContentLoaded", async () => {
+        document.addEventListener("DOMContentLoaded", ()=> {
             const mainElement = document.querySelector("main");
-            const usersArr = await getUsers();
-            console.log(usersArr)
+            getUsers();
+            // console.log(usersArr)
 
-            const userList = createUsersList(usersArr);
-            mainElement.appendChild(userList);
+            // const userList = createUsersList(usersArr);
+            // mainElement.appendChild(userList);
             
             
         })
@@ -55,14 +59,20 @@
         
 
     const filterUsers = async (users) => {
-            const mainElement = document.querySelector("main");
-            const usersArr = await getUsers();
-            const filterInputValue = document.querySelector("#filterInput").value;
+            // const mainElement = document.querySelector("main");
+            const filterInputValue = document.querySelector("#filterInput").value.toLowerCase();
 
-            const filteredArr = usersArr.filter(user => { 
-                user.includes(filterInputValue) 
+            const filteredArr = usersArr.filter((user) => { 
+                console.log("userName:" + user.name.first.toLowerCase())
+                console.log("input value:" + filterInputValue)
+                
+                return user.name.first.toLowerCase() === filterInputValue;
+
+                
+                // console.log(user.name.first + filterInputValue)
             })
-
+            // console.log(user)
+            console.log(filterInputValue)
             console.log(filteredArr)
             
 
