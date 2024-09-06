@@ -14,8 +14,6 @@
             sessionStorage.setItem("userArr", JSON.stringify(usersArr))
 
             const storedUsers = JSON.parse(sessionStorage.getItem("userArr"))
-            // console.log("sessionStorage:", storedUsers)
-
 
         }
 
@@ -93,10 +91,25 @@
             userListElement.innerHTML = "";
 
             const filteredArr = storedUsers.filter((user) => { 
-                
-                return user.name.first.toLowerCase() === filterInputValue;
+                const userInfoArr = Object.values(user); //return a array with the values of the object
 
+                const containsInput = userInfoArr.some(value => {
+                    if (typeof value === "object") {
+                        const nestedValues = Object.values(value); //return array of objects that were nested in the previous arr
+                        return nestedValues.some(nestedValue => {
+                            // console.log("nested arr:", nestedValues)
+                            return value.toString().toLowerCase().includes(filterInputValue);
+
+                        })
+
+                    } else {
+                        return value.toString().toLowerCase().includes(filterInputValue);
+                    }
+
+                })
                 
+                return containsInput;
+
             })
 
             if (filteredArr.length > 0) {
@@ -117,12 +130,10 @@
                     noUserMessage.textContent = "No user found. Please, try again.";
                     mainElement.appendChild(noUserMessage);
                 }
-
             }
-
-
-            // console.log(filteredArr)
         }
+
+
 
     </script>
 </head>
