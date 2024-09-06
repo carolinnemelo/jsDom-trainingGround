@@ -19,19 +19,20 @@
 
         }
 
-        document.addEventListener("DOMContentLoaded", ()=> {
+        document.addEventListener("DOMContentLoaded", async ()=> {
             const mainElement = document.querySelector("main");
-            getUsers();
-            // console.log(usersArr)
+            await getUsers();
 
-            // const userList = createUsersList(usersArr);
-            // mainElement.appendChild(userList);
+            const storedUsers = JSON.parse(sessionStorage.getItem("userArr"))
+            const userList = createUsersList(storedUsers);
+            mainElement.appendChild(userList);
             
             
         })
 
         const createUsersList = (users) => {
             const userListElement = document.createElement("div");
+            userListElement.classList.add("userListElement")
             
             users.map((user) => {
                 const userDiv = document.createElement("div");
@@ -58,24 +59,34 @@
         }
         
 
-    const filterUsers = async (users) => {
-            // const mainElement = document.querySelector("main");
+        const filterUsers = () => {
+            const mainElement = document.querySelector("main");
             const filterInputValue = document.querySelector("#filterInput").value.toLowerCase();
+            const storedUsers = JSON.parse(sessionStorage.getItem("userArr"));
 
-            const filteredArr = usersArr.filter((user) => { 
-                console.log("userName:" + user.name.first.toLowerCase())
-                console.log("input value:" + filterInputValue)
+            const userListElement = document.querySelector(".userListElement");
+            
+            userListElement.innerHTML = "";
+
+            const filteredArr = storedUsers.filter((user) => { 
                 
                 return user.name.first.toLowerCase() === filterInputValue;
 
                 
-                // console.log(user.name.first + filterInputValue)
             })
-            // console.log(user)
-            console.log(filterInputValue)
-            console.log(filteredArr)
-            
 
+            if (filteredArr.length > 0) {
+                const userList = createUsersList(filteredArr);
+                mainElement.appendChild(userList);
+            } else {
+                const noUserMessage = document.createElement("h3");
+                noUserMessage.textContent = "No user found. Please, try again."
+                mainElement.appendChild(noUserMessage);
+
+            }
+
+
+            console.log(filteredArr)
         }
 
     </script>
