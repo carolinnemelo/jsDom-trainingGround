@@ -31,19 +31,43 @@
         })
 
         const createUsersList = (users) => {
-            const userListElement = document.createElement("div");
-            userListElement.classList.add("userListElement")
-            
-            users.map((user) => {
-                const userDiv = document.createElement("div");
-                
-                userDiv.appendChild(createUserThumbnail(user));
-                userDiv.appendChild(createUserHeading(user));
 
-                userListElement.appendChild(userDiv);
-            })
-           
+            const userListElement = document.querySelector(".userListElement");
+
+            if (!userListElement) {
+                
+                const userListElement = document.createElement("div");
+                userListElement.classList.add("userListElement")
+                
+                users.map((user) => {
+                    const userDiv = document.createElement("div");
+                    
+                    userDiv.appendChild(createUserThumbnail(user));
+                    userDiv.appendChild(createUserHeading(user));
+    
+                    userListElement.appendChild(userDiv);
+                })
+
             return userListElement;
+
+
+            } else if (userListElement){
+
+                userListElement.innerHTML = "";
+                users.map((user) => {
+                    const userDiv = document.createElement("div");
+                    
+                    userDiv.appendChild(createUserThumbnail(user));
+                    userDiv.appendChild(createUserHeading(user));
+    
+                    userListElement.appendChild(userDiv);
+                })
+
+            return userListElement;
+
+            }
+
+           
         }
         
         const createUserHeading = (user) => {
@@ -76,9 +100,10 @@
             })
 
             if (filteredArr.length > 0) {
+                userListElement.innerHTML = "";
                 const userList = createUsersList(filteredArr);
                 mainElement.appendChild(userList);
-            } else {
+            } else if (filteredArr.length === 0) {
                 let noUserMessage = document.querySelector("#noUserMessage-id");
 
                 if (!noUserMessage) {
@@ -96,7 +121,7 @@
             }
 
 
-            console.log(filteredArr)
+            // console.log(filteredArr)
         }
 
     </script>
